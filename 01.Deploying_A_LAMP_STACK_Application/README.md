@@ -129,10 +129,13 @@ Configuring Apache virtual hosts allows you to host multiple websites or applica
 
 Apache webserver serves a website by the way of server blocks inside its /var/www/ directory, and it can support multiple of this server blocks to host other websites.
 
-```
-#
-$ sudo mkdir /var/www/projectlamp
-```
+We need to create our own server block under the '/var/www' directory with the following command 'sudo mkdir /var/www/projectlamp'
+
+![Screenshot 2023-12-14 163954](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6d0a8984-2e8c-4571-a10d-4d8d8eeaf8f1)
+
+after creating we need to change ownership/permission on the newly created direction to the current system user 'sudo chown -R $USER:$USER /var/www/projectlamp'
+
+
 
 
 
