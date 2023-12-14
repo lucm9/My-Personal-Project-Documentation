@@ -125,7 +125,7 @@ Configuring Apache virtual hosts allows you to host multiple websites or applica
 
 ![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b595f5d2-4411-4227-8fec-ad6172dfc8fd)
 
-### Creating a web domain for our server 
+## Creating a web domain for our server 
 
 Apache webserver serves a website by the way of server blocks inside its /var/www/ directory, and it can support multiple of this server blocks to host other websites.
 
@@ -134,6 +134,7 @@ We need to create our own server block under the '/var/www' directory with the f
 ![Screenshot 2023-12-14 163954](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6d0a8984-2e8c-4571-a10d-4d8d8eeaf8f1)
 
 after creating we need to change ownership/permission on the newly created direction to the current system user 'sudo chown -R $USER:$USER /var/www/projectlamp'
+
 
 
 
