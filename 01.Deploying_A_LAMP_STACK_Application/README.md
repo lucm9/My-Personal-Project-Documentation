@@ -87,3 +87,13 @@ the above output shows are webserver can respond to requests. Now lets connect t
 To see if our web application server can respond to requests , use the public ip address of our instance on a web browser. http://<Public-IP-Address>:80
 ![Screenshot 2023-12-14 131951](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/c1d3646d-82cb-47e7-837c-5557c97d2fe6)
 
+## Installing MySQL
+MySQL is an open-source relational database management system (RDBMS) that is widely used for building and managing databases. We use mysql to store and retreive data on our site. 
+
+install mysql using 'sudo apt install mysql-server' command
+![Screenshot 2023-12-14 144339](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/291a0944-09bf-4ad0-9aa6-397f5166560d)
+
+Run the '$ sudo mysql_secure_installation' command after the installation. It is used to enhance the security of a MySQL installation on a Linux system.
+![Screenshot 2023-12-14 144735](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/0de435d5-88b7-49d1-87c6-e0281fa5949b)
+
+
