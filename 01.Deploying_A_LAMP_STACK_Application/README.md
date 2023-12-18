@@ -136,6 +136,82 @@ We need to create our own server block under the `/var/www` directory with the f
 after creating we need to change ownership/permission on the newly created direction to the current system user 
 `sudo chown -R $USER:$USER /var/www/projectlamp`
 
+![Screenshot 2023-12-14 165646](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/1414365f-30b3-47fb-a7ea-cc978d71c5a9)
+
+The projectlamp directory represents the directory which will contains files related to our website as it represents a new server block on the apache webserver. In order to spin up this server block we need to configure it by creating a `.conf` file.
+
+`sudo vi /etc/apache2/sites-available/projectlamp.conf`
+```
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    ServerName projectlamp
+    DocumentRoot /var/www/projectlamp
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+```
+
+![Screenshot 2023-12-18 125822](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d7c017d1-857f-42f3-ae65-1fc105758184)
+
+Run esc `:wq`  to save and terminate vi editor.
+
+Run `sudo a2ensite projectlamp` to activate the server block.
+
+Run `sudo a2dissite 000-default` to deactivate the default webserver block that comes with apache on default.
+
+Run `sudo apache2ctl configtest` To make sure your configuration file doesn’t contain syntax errors, run.
+
+Reload the apache2 server `sudo systemctl reload apache2` 
+![Screenshot 2023-12-18 130838](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/35a1ae7e-65a3-43c3-b0bb-f649879eeed2)
+
+Create an index.html file inside the /var/www/projectlampstack since Your new website is now active, but the web root /var/www/projectlamp is still empty
+```
+HOSTNAME=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
+echo "Hello LAMP from hostname $HOSTNAME with public IP $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" > /var/www/projectlamp/index.html
+```
+Go to the broswer and open the webpage http://<public_ip_address>:80
+![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/1528e121-1bfb-4827-a31e-3a29c01ab5e7)
+
+## STEP 5 — ENABLE PHP ON THE WEBSITE
+
+By default, the webserver has a preference for serving an index.html file based on the order of precedence by default in the DirectoryIndex settings of Apache.
+To serve an index.php containing the server-side code, you’ll need to edit the `sudo vi /etc/apache2/mods-enabled/dir.conf` file and change the order in which the index.php file is listed within the DirectoryIndex.
+
+```
+<IfModule mod_dir.c>
+        #Change this:
+        #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
+        #To this:
+        DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+```
+Now we have the ext `.php` comes first in the order 
+![Screenshot 2023-12-18 135001](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/225dc7ac-d5aa-4d91-96ad-37f9f55f29aa)
+
+After saving and closing the file, you will need to reload Apache so the changes take effect:
+`sudo systemctl reload apache2`
+
+Run `sudo vi /var/www/projectlamp/index.php` 
+
+This will open a blank file. Add the following text, which is valid PHP code, inside the file:
+
+`<?php
+phpinfo();`
+
+When you are finished, save and close the file, Input the instance public ip address on a web browser and you will see a page similar to this:
+
+![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/50da41e9-7ffc-44c3-a78d-18791b8bb329)
+
+
+
+
+
+
+
+
+
+
 
 
 
