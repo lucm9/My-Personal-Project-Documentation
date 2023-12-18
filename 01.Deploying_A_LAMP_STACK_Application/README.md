@@ -72,6 +72,7 @@ A security group acts as a virtual firewall for your EC2 instances, controlling 
 - Outbound Rules: By default, all outbound traffic is allowed from an EC2 instance. You can, however, define outbound rules to restrict the types of traffic that can leave the instance.
 
 When the instance is created, we have a default TCP rule on port 22 opened which is useful for SSH connection to a terminal. In order to ensure that our webpage are being acccessed on the internet, we need to open a TCP port 80 inbound rule.
+
 ![5 Security_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/4dbce4b0-3509-44d1-90a7-f96f96544154)
 
 To check the accessiblity of our web server on the internet, we `curl` the IP address/DNS name of our localhost. Curl is used for making requests.
@@ -83,18 +84,22 @@ curl http://127.0.0.1:80  or curl http://localhost:80
 the above output shows are webserver can respond to requests. Now lets connect to our webserver via the webpage.
 
 To see if our web application server can respond to requests , use the public ip address of our instance on a web browser. http://<Public-IP-Address>:80
+
 ![6 b checking_rules_config](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b056a7ba-0b16-4be8-9659-cd838e72ed6a)
 
 ## Installing MySQL
 MySQL is an open-source relational database management system (RDBMS) that is widely used for building and managing databases. We use mysql to store and retreive data on our site. 
 
 install mysql using `sudo apt install mysql-server` command
+
 ![7 Mysql_installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/c232b253-c142-4335-b86d-e9dc2cb394e3)
 
 Run the `$ sudo mysql_secure_installation` command after the installation. It is used to enhance the security of a MySQL installation on a Linux system.
+
 ![8 mysql_secure_config](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/96c0efde-6e71-4ff7-a6cb-2c64e002c2d2)
 
 Upon successful installation and configuration use `sudo mysql` to enter the mysql to start the mysqld command-line and interact with the database.
+
 ![9 Sql_logging](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/8199a25b-a545-4c79-a931-883d17dfa424)
 
 ## Installing PHP and it`s modules 
@@ -120,6 +125,7 @@ $ php -v
 Apache is a web server but it actually need informtion to serve the website that information is what we load into the virtual host. 
 
 Configuring Apache virtual hosts allows you to host multiple websites or applications on a single server, each with its own domain or subdomain. Virtual hosts enable you to partition and manage your web server efficiently. 
+
 ![11 b Apache_Virtual_host](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/0b6c3e58-3d23-441e-b667-dfbb3de46d74)
 
 ## Creating a web domain for our server 
@@ -132,6 +138,7 @@ We need to create our own server block under the `/var/www` directory with the f
 
 after creating we need to change ownership/permission on the newly created direction to the current system user 
 `sudo chown -R $USER:$USER /var/www/projectlamp`
+
 ![13 Changing_projectlamp_permissions](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ffc0d191-8f3f-4406-82e0-561007e6bf10)
 
 The projectlamp directory represents the directory which will contains files related to our website as it represents a new server block on the apache webserver. In order to spin up this server block we need to configure it by creating a `.conf` file.
@@ -158,14 +165,16 @@ Run `sudo a2dissite 000-default` to deactivate the default webserver block that 
 Run `sudo apache2ctl configtest` To make sure your configuration file doesn’t contain syntax errors, run.
 
 Reload the apache2 server `sudo systemctl reload apache2` 
+
 ![15 Configured_projectlamp_via_virtualhost](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/fbdc0a3b-e53f-44a6-a9b4-454f139e4d7c)
 
-Create an `index.html` file inside the `/var/www/projectlampstack` since Your new website is now active, but the web root `/var/www/projectlamp` is still empty
+Create an `index.html` file inside the `/var/www/projectlamp` since Your new website is now active, but the web root `/var/www/projectlamp` is still empty
 ```
 HOSTNAME=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
 echo "Hello LAMP from hostname $HOSTNAME with public IP $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" > /var/www/projectlamp/index.html
 ```
 Go to the broswer and open the webpage http://<public_ip_address>:80
+
 ![16 Testing_deployment](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/37069f9a-e663-4316-a5b3-bdb1f81b042a)
 
 ## STEP 5 — ENABLE PHP ON THE WEBSITE
@@ -182,6 +191,7 @@ To serve an `index.php` containing the server-side code, you’ll need to edit t
 </IfModule>
 ```
 Now we have the ext `.php` comes first in the order 
+
 ![17 Config_directivemod](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/de930230-095a-4bb0-8702-6a33b592cf06)
 
 After saving and closing the file, you will need to reload Apache so the changes take effect:
