@@ -165,7 +165,7 @@ Run `sudo apache2ctl configtest` To make sure your configuration file doesn’t 
 Reload the apache2 server `sudo systemctl reload apache2` 
 ![Screenshot 2023-12-18 130838](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/35a1ae7e-65a3-43c3-b0bb-f649879eeed2)
 
-Create an index.html file inside the /var/www/projectlampstack since Your new website is now active, but the web root /var/www/projectlamp is still empty
+Create an `index.html` file inside the `/var/www/projectlampstack` since Your new website is now active, but the web root `/var/www/projectlamp` is still empty
 ```
 HOSTNAME=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
 echo "Hello LAMP from hostname $HOSTNAME with public IP $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" > /var/www/projectlamp/index.html
@@ -176,7 +176,7 @@ Go to the broswer and open the webpage http://<public_ip_address>:80
 ## STEP 5 — ENABLE PHP ON THE WEBSITE
 
 By default, the webserver has a preference for serving an index.html file based on the order of precedence by default in the DirectoryIndex settings of Apache.
-To serve an index.php containing the server-side code, you’ll need to edit the `sudo vi /etc/apache2/mods-enabled/dir.conf` file and change the order in which the index.php file is listed within the DirectoryIndex.
+To serve an `index.php` containing the server-side code, you’ll need to edit the `sudo vi /etc/apache2/mods-enabled/dir.conf` file and change the order in which the index.php file is listed within the DirectoryIndex.
 
 ```
 <IfModule mod_dir.c>
