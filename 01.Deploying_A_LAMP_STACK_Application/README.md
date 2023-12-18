@@ -136,8 +136,7 @@ We need to create our own server block under the `/var/www` directory with the f
 
 ![12 Creating_projectlamp_dir](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/0a5eafdf-dee1-40d5-9dd5-3840423d3306)
 
-after creating we need to change ownership/permission on the newly created direction to the current system user 
-`sudo chown -R $USER:$USER /var/www/projectlamp`
+after creating we need to change ownership/permission on the newly created direction to the current system user `sudo chown -R $USER:$USER /var/www/projectlamp`
 
 ![13 Changing_projectlamp_permissions](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ffc0d191-8f3f-4406-82e0-561007e6bf10)
 
