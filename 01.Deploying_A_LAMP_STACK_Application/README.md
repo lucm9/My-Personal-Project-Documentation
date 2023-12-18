@@ -23,21 +23,20 @@ Together, these components form a stack that supports the development and deploy
 
 First we log onto AWS Console and launch an EC2 ubuntu VM Instance. Steps to create EC2 instance will be listed below. When creating an EC2 instance remember to create .pem keypair authentication. `Download private key(*.pem)` on your local computer in order to ssh.
 
-![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d058111d-43ca-44d3-a7ef-37bb5988c70a)
+![1 Ec2_Creation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/9c12e5f7-4008-4b0b-b629-1b7e471ee715)
 
 ## SSH
 
 The primary purpose of SSH is to provide a secure and encrypted way to access and manage devices, servers, and networks remotely. SSH into a server on Windows using a `PEM file`. On Windows `cd` into the direction or location of the pem file. 
 Run the below command to log into the instance via ssh:
-
-![Screenshot 2023-12-14 121208](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2374e412-ab4d-428b-8441-5e729a848c29)
+![2 Pem_Key](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/228b4838-6228-4215-a463-692bf240d43e)
 
 ```
 ssh -i <private_keyfile.pem> username@ip-address
 ```
 - Successful login
 
-![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/cb6b8a49-d037-4de0-a36b-778565bc9178)
+![3 Logged_Onto_Ec2_Instance](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/465373d3-fda2-4fe8-848f-3f9ad81ac3e4)
 
 ## Setting Up Apache Web Server
 
@@ -50,7 +49,7 @@ $ sudo apt update
 # Install apache server
 $ sudo apt install apache2
 ```
-![Screenshot 2023-12-14 123740](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/c12081ce-7ccf-4520-b07a-54ed57ee550a)
+![4 Apache_Installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/e204201b-2316-45f1-bd3b-0c3315d31bf3)
 
 ```
 # To Start the apache server
@@ -62,7 +61,7 @@ $ sudo systemctl status apache2
 # To Enable apache to automatically reboot upon system reboot
 $ sudo systemctl enable apache2
 ```
-![Screenshot 2023-12-14 124134](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ec09abdf-0b06-4bfa-a17d-e40a188364b6)
+![4 b Successsful_Apache_Installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6659708e-e204-4f64-9888-849dccc3c880)
 
 Looking at the status it`s green, it states the apache is active and running
 
@@ -73,31 +72,30 @@ A security group acts as a virtual firewall for your EC2 instances, controlling 
 - Outbound Rules: By default, all outbound traffic is allowed from an EC2 instance. You can, however, define outbound rules to restrict the types of traffic that can leave the instance.
 
 When the instance is created, we have a default TCP rule on port 22 opened which is useful for SSH connection to a terminal. In order to ensure that our webpage are being acccessed on the internet, we need to open a TCP port 80 inbound rule.
-
-![Screenshot 2023-12-14 130813](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/bab5cbbb-cf48-4f26-afea-5057872c6ab9)
+![5 Security_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/4dbce4b0-3509-44d1-90a7-f96f96544154)
 
 To check the accessiblity of our web server on the internet, we `curl` the IP address/DNS name of our localhost. Curl is used for making requests.
 ```
 curl http://127.0.0.1:80  or curl http://localhost:80 
 ```
-![Screenshot 2023-12-14 131337](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/05c7e4cc-9430-427e-a6e6-dbb377c1b6f0)
+![6 a Checking_Inbound_rule_implementation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/5fbb67e8-dedf-42d5-8901-dc9b5ce33dd5)
 
 the above output shows are webserver can respond to requests. Now lets connect to our webserver via the webpage.
 
 To see if our web application server can respond to requests , use the public ip address of our instance on a web browser. http://<Public-IP-Address>:80
-![Screenshot 2023-12-14 131951](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/c1d3646d-82cb-47e7-837c-5557c97d2fe6)
+![6 b checking_rules_config](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b056a7ba-0b16-4be8-9659-cd838e72ed6a)
 
 ## Installing MySQL
 MySQL is an open-source relational database management system (RDBMS) that is widely used for building and managing databases. We use mysql to store and retreive data on our site. 
 
 install mysql using `sudo apt install mysql-server` command
-![Screenshot 2023-12-14 144339](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/291a0944-09bf-4ad0-9aa6-397f5166560d)
+![7 Mysql_installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/c232b253-c142-4335-b86d-e9dc2cb394e3)
 
 Run the `$ sudo mysql_secure_installation` command after the installation. It is used to enhance the security of a MySQL installation on a Linux system.
-![Screenshot 2023-12-14 144735](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/0de435d5-88b7-49d1-87c6-e0281fa5949b)
+![8 mysql_secure_config](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/96c0efde-6e71-4ff7-a6cb-2c64e002c2d2)
 
 Upon successful installation and configuration use `sudo mysql` to enter the mysql to start the mysqld command-line and interact with the database.
-![Screenshot 2023-12-14 145131](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b4bd4160-71c3-47ed-9ebc-f12c1aa66cf5)
+![9 Sql_logging](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/8199a25b-a545-4c79-a931-883d17dfa424)
 
 ## Installing PHP and it`s modules 
 
@@ -107,7 +105,7 @@ We need to install php alongside its modules, `php-mysql` which is php module th
 ```
 $ sudo apt install php php-mysql libapache2-mod-php
 ```
-![Screenshot 2023-12-14 151447](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d6464369-4339-4e9d-900a-16b95a195071)
+![10 Installing_php_modules](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/20e53253-b1d4-4354-8f87-aea0213249d1)
 
 ```
 #After installing, you`ll again need to restart Apache
@@ -116,14 +114,13 @@ $ sudo service apache2 restart
 #Verify PHP
 $ php -v
 ```
-![Screenshot 2023-12-14 161514](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/a95e243a-5a2a-4921-9243-f40802d6fdc4)
+![11 Checking_php_version](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/f44c59b6-91e0-430a-ab40-920b4c075ef2)
 
 ## Creating A Virtual Host For Your Website Using Apache
 Apache is a web server but it actually need informtion to serve the website that information is what we load into the virtual host. 
 
 Configuring Apache virtual hosts allows you to host multiple websites or applications on a single server, each with its own domain or subdomain. Virtual hosts enable you to partition and manage your web server efficiently. 
-
-![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b595f5d2-4411-4227-8fec-ad6172dfc8fd)
+![11 b Apache_Virtual_host](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/0b6c3e58-3d23-441e-b667-dfbb3de46d74)
 
 ## Creating a web domain for our server 
 
@@ -131,12 +128,11 @@ Apache webserver serves a website by the way of server blocks inside its /var/ww
 
 We need to create our own server block under the `/var/www` directory with the following command `sudo mkdir /var/www/projectlamp`
 
-![Screenshot 2023-12-14 163954](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6d0a8984-2e8c-4571-a10d-4d8d8eeaf8f1)
+![12 Creating_projectlamp_dir](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/0a5eafdf-dee1-40d5-9dd5-3840423d3306)
 
 after creating we need to change ownership/permission on the newly created direction to the current system user 
 `sudo chown -R $USER:$USER /var/www/projectlamp`
-
-![Screenshot 2023-12-14 165646](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/1414365f-30b3-47fb-a7ea-cc978d71c5a9)
+![13 Changing_projectlamp_permissions](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ffc0d191-8f3f-4406-82e0-561007e6bf10)
 
 The projectlamp directory represents the directory which will contains files related to our website as it represents a new server block on the apache webserver. In order to spin up this server block we need to configure it by creating a `.conf` file.
 
@@ -151,8 +147,7 @@ The projectlamp directory represents the directory which will contains files rel
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
-
-![Screenshot 2023-12-18 125822](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d7c017d1-857f-42f3-ae65-1fc105758184)
+![14 Projectlamp_Config](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6bc29706-f4be-44bb-95e4-d201f2bc0445)
 
 Run esc `:wq`  to save and terminate vi editor.
 
@@ -163,7 +158,7 @@ Run `sudo a2dissite 000-default` to deactivate the default webserver block that 
 Run `sudo apache2ctl configtest` To make sure your configuration file doesn’t contain syntax errors, run.
 
 Reload the apache2 server `sudo systemctl reload apache2` 
-![Screenshot 2023-12-18 130838](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/35a1ae7e-65a3-43c3-b0bb-f649879eeed2)
+![15 Configured_projectlamp_via_virtualhost](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/fbdc0a3b-e53f-44a6-a9b4-454f139e4d7c)
 
 Create an `index.html` file inside the `/var/www/projectlampstack` since Your new website is now active, but the web root `/var/www/projectlamp` is still empty
 ```
@@ -171,7 +166,7 @@ HOSTNAME=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
 echo "Hello LAMP from hostname $HOSTNAME with public IP $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" > /var/www/projectlamp/index.html
 ```
 Go to the broswer and open the webpage http://<public_ip_address>:80
-![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/1528e121-1bfb-4827-a31e-3a29c01ab5e7)
+![16 Testing_deployment](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/37069f9a-e663-4316-a5b3-bdb1f81b042a)
 
 ## STEP 5 — ENABLE PHP ON THE WEBSITE
 
@@ -187,7 +182,7 @@ To serve an `index.php` containing the server-side code, you’ll need to edit t
 </IfModule>
 ```
 Now we have the ext `.php` comes first in the order 
-![Screenshot 2023-12-18 135001](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/225dc7ac-d5aa-4d91-96ad-37f9f55f29aa)
+![17 Config_directivemod](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/de930230-095a-4bb0-8702-6a33b592cf06)
 
 After saving and closing the file, you will need to reload Apache so the changes take effect:
 `sudo systemctl reload apache2`
@@ -200,11 +195,7 @@ This will open a blank file. Add the following text, which is valid PHP code, in
 phpinfo();`
 
 When you are finished, save and close the file, Input the instance public ip address on a web browser and you will see a page similar to this:
-
-![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/50da41e9-7ffc-44c3-a78d-18791b8bb329)
-
-
-
+![18 Php_success](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/91d562cb-56a4-458a-9b82-0219f77e8a1c)
 
 
 
