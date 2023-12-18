@@ -63,15 +63,20 @@ Another way to retrieve your pubic IP address run `curl ifconfig.me'
 MySQL is an open-source relational database management system (RDBMS) that is widely used for building and managing databases. We use mysql to store and retreive data on our site. 
 
 install mysql using `sudo apt install mysql-server` command
+
 ![8 MySQL_Installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/824014b8-bea7-4b05-bf48-6124e5334290)
 
 Run the `$ sudo mysql_secure_installation` command after the installation. It is used to enhance the security of a MySQL installation on a Linux system.
+
 ![9 MySQL_Secure_Installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/a8adaadd-2c89-407a-b4c3-9381ffc397d0)
 
 Upon successful installation and configuration use `sudo mysql` to enter the mysql to start the mysqld command-line and interact with the database.
+
 ![10 MySQL_Login](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b64e559d-3b27-4d05-ae22-dfde71904edb)
 
-Install PHP
+## Install PHP
+
+
 
 
 
