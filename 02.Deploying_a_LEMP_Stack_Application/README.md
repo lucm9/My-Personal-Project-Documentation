@@ -23,7 +23,7 @@ Run the below command to log into the instance via ssh:
 ```
 ssh -i <private_keyfile.pem> username@ip-address
 ```
-- Successful login
+Successful login
 ![2 Ec2_login](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/3ce0e118-454f-4f27-b6c9-6259d576a739)
 
 ## Setting Up Nginx Web Server
@@ -75,6 +75,15 @@ Upon successful installation and configuration use `sudo mysql` to enter the mys
 ![10 MySQL_Login](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b64e559d-3b27-4d05-ae22-dfde71904edb)
 
 ## Install PHP
+
+You have Nginx installed to serve your content and MySQL installed to store and manage your data. Now you can install PHP to process code and generate dynamic content for the web server.
+
+![11 PHP_Installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2c4feb98-75f5-4986-b976-3a656ab43318)
+
+
+
+![12 Nginx_Configuration](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b4c7b8fe-9a93-4189-8039-b84d7a91a94e)
+
 
 
 
