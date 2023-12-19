@@ -99,12 +99,12 @@ Creating a configuration for our server block
 
 The following snippets represents the configuration required for our web server block to be functional
 ```
-#/etc/nginx/sites-available/projectlempstack
+#/etc/nginx/sites-available/projectemp
 
 server {
     listen 80;
-    server_name projectlempstack www.projectlempstack;
-    root /var/www/projectlempstack;
+    server_name projectlemp www.projectlemp;
+    root /var/www/projectlemp;
 
     index index.html index.htm index.php;
 
@@ -114,7 +114,7 @@ server {
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
-        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
      }
 
     location ~ /\.ht {
@@ -142,12 +142,24 @@ Currently our new server block has been created and configured but currently the
 
 We then reload nginx for all configurations to take effect `sudo reload nginx`.
 
-Create an `index.html` file inside projectlemp directory `/var/www/projeectlemp` and write in contents to be accessed over the internet. Paste public IP address on a browser to see content.
+Create an `index.html` file inside projectlemp directory `/var/www/projeectlemp` and write in contents to be accessed over the internet.
+```
+sudo sh -c 'echo "Hello LEMP from hostname $(curl -s ifconfig.me) with public IP $(curl -s ifconfig.me)" > /var/www/projectlemp/index.html'
+```
+![14  Adding content to the website](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/1e32beee-0dcc-4f62-8351-971de5cbe893)
 
-sudo sh -c 'echo "Hello LAMP from hostname $(curl -s ifconfig.me) with public IP $(curl -s ifconfig.me)" > /var/www/projectlemp/index.html'
+Paste public IP address on a browser to see content. `http://<public-ip>:80`
 
+![15 Website_Content](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/4164e5cf-68cc-4099-9d6d-8a0c268cfa52)
 
-`http://<public-ip>:80`
+## Serving PHP Using Nginx
+
+Create an `info.php` file inside the `/var/www/projectlemp` directory.
+
+On a browser enter `http://<public-ip>/info.php`
+
+![16 info_php](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/66e2c6c0-6e69-4369-9f09-3c2ac5259794)
+
 
 
 
