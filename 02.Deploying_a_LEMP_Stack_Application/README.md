@@ -121,6 +121,27 @@ server {
 
 }
 ```
+We then link the configuration file to the sites-enabled directory
+
+`sudo ln -s /etc/nginx/sites-available/projectlemp /etc/nginx/sites-enabled`
+
+To test our configuration for errors we run
+`sudo nginx -t`
+
+![13a Nginx_Config_Test_Error](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6839044f-c5d3-4ab1-9269-0bc6035a8a37) 
+
+With failure double check `/etc/nginx/sites-enabled` location remove anyfile that's not supposed to be there. 
+
+![13b Nginx_Config_Test_Success](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/87f18247-47aa-4f66-ae20-06f52e109629)
+
+We need to disable the default setting 
+
+Currently our new server block has been created and configured but currently the default server block is the default block that comes with nginx install. To unlink it we sudo unlink /etc/sites-available/default.
+
+We then reload nginx for all configurations to take effect `sudo reload nginx`.
+
+Create an `index.html` file inside projectlemp directory `/var/www/projeectlemp` and write in contents to be accessed over the internet. Paste public IP address on a browser to see content.
+`http://<public-ip>:80`
 
 
 
