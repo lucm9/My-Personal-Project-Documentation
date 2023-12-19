@@ -85,9 +85,43 @@ sudo apt install php-fpm php-mysql
 
 ![11 PHP_Installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2c4feb98-75f5-4986-b976-3a656ab43318)
 
-To assign ownership to the directory of the `$USER` Environment variable run `sudo chown -R $USER:$USER /var/www/projectLEMP`
+## Creating a Web Server Block For our Web Application
+To serve our webcontent on our webserver, we create a directory for our project inside the `/var/www/ directory`.
+
+Run `sudo mkdir /var/www/projectlemp` Then we change permissions of the projectlampstack directory to the current user system Run `sudo chown -R $USER:$USER /var/www/projectlemp`
 
 ![12 Nginx_Configuration](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b4c7b8fe-9a93-4189-8039-b84d7a91a94e)
+
+Creating a configuration for our server block
+`sudo nano /etc/nginx/sites-available/projectlemp`
+
+The following snippets represents the configuration required for our web server block to be functional
+```
+#/etc/nginx/sites-available/projectlempstack
+
+server {
+    listen 80;
+    server_name projectlempstack www.projectlempstack;
+    root /var/www/projectlempstack;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+}
+```
+
 
 
 
