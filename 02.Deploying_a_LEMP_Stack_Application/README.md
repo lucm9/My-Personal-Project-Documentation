@@ -160,6 +160,70 @@ On a browser enter `http://<public-ip>/info.php`
 
 ![16 info_php](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/66e2c6c0-6e69-4369-9f09-3c2ac5259794)
 
+## Retrieve Data From Mysql Database with PHP
+
+We will create a "To do list" and configure access to it, so the `NGINX` Website would be able to query data from it.
+```
+First connect to the Mysql database 
+$ `sudo mysql`
+
+Create a new database
+mysql> `Create database example_database`;
+
+We need to create a new user with password using `mysql_native_password`
+mysql> `create user 'example_user'@'%' Identified with mysql_native_password by 'password'`
+
+We need to give the newly create user permissions to the database
+mysql> `grant all on lemp_db.* to 'lemp_user'@'%';`
+
+To exit
+mysql> `exit`
+```
+![17 Mysql_login_executions](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/8c70a2a7-8c39-45d6-bbc6-9fda9501f035)
+
+Test the login and password `mysql -u lemp_user -p`
+
+![18 Mysql_login_thrugh_ubuntu](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/41f44350-1ee8-40fd-9a67-4510875e26b2)
+
+We create a table for the current user inside the lemp_db database and specify content parameters
+
+CREATE TABLE lemp_db.todo_list(
+    item_id INT AUTO_INCREMENT,
+    content VARCHAR(255),
+    PRIMARY KEY (item_id)
+);
+Push in contents into the table INSERT INTO lemp_db.todo_list(content) VALUES ('enter contents')
+![19 Inset_data_into_Mysql](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2bd64cb0-78c5-4681-8a63-60363f27b74d)
+
+The following PHP script connects to the MySQL database and queries for the content of the todo_list table, displays the results in a list. If there is a problem with the database connection, it will throw an exception.
+
+Copy this content into your todo_list.php script:
+```
+<?php
+$user = "lemp_user";
+$password = "password";
+$database = "lemp_db";
+$table = "todo_list";
+
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+```
+![20 DB_Connection_PHP_Config](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/68c73b68-89a8-474c-b72c-c138ef5dde92)
+
+![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ccdf9881-ca6a-4117-b04e-2fe243c20347)
+
+
+
+
 
 
 
