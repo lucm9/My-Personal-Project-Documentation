@@ -48,10 +48,12 @@ Verify if the security group implementation was success
 Run `curl http://localhost:80 curl http://localhost:80
 or
 curl http://127.0.0.1:80`
+
 ![6a  Verify_security_group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/c5c2c9ce-7dd5-4a3d-beac-4287908e0a40)
 
 Verify through the internet, open the web browser and try to access with the the public IP
 `htttp://<Public-IP-Address>:80`
+
 ![6b Welcome_to_NGINX](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d963abcc-f6cf-4a91-8e47-10ea26e43fd9)
 
 This page confirms the firewalls were configured correctly
@@ -136,16 +138,16 @@ With failure double check `/etc/nginx/sites-enabled` location remove anyfile tha
 
 We need to disable the default setting 
 
-Currently our new server block has been created and configured but currently the default server block is the default block that comes with nginx install. To unlink it we sudo unlink /etc/sites-available/default.
+Currently our new server block has been created and configured but currently the default server block is the default block that comes with nginx install. To unlink it we `sudo unlink /etc/nginx/sites-enabled/default`.
 
 We then reload nginx for all configurations to take effect `sudo reload nginx`.
 
 Create an `index.html` file inside projectlemp directory `/var/www/projeectlemp` and write in contents to be accessed over the internet. Paste public IP address on a browser to see content.
+
+sudo sh -c 'echo "Hello LAMP from hostname $(curl -s ifconfig.me) with public IP $(curl -s ifconfig.me)" > /var/www/projectlemp/index.html'
+
+
 `http://<public-ip>:80`
-
-
-
-
 
 
 
