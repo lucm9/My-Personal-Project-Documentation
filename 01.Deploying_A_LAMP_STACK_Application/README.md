@@ -169,8 +169,7 @@ Reload the apache2 server `sudo systemctl reload apache2`
 
 Create an `index.html` file inside the `/var/www/projectlamp` since Your new website is now active, but the web root `/var/www/projectlamp` is still empty
 ```
-HOSTNAME=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)
-echo "Hello LAMP from hostname $HOSTNAME with public IP $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" > /var/www/projectlamp/index.html
+sudo sh -c 'echo "Hello LAMP from hostname $(curl -s ifconfig.me) with public IP $(curl -s ifconfig.me)" > /var/www/projectlamp/index.html'
 ```
 Go to the broswer and open the webpage http://<public_ip_address>:80
 
