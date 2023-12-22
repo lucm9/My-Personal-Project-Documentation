@@ -1,14 +1,14 @@
 # Deploying a MERN Stack Application on AWS Cloud
 
-The MERN stack is a popular technology stack for building full-stack web applications. The acronym "MERN" stands for MongoDB, Express.js, React.js, and Node.js. Each component in the stack plays a specific role in the development of web applications. Here's an overview of each technology in the MERN stack:
+The **MERN** stack is a popular technology stack for building full-stack web applications. The acronym "MERN" stands for MongoDB, Express.js, React.js, and Node.js. Each component in the stack plays a specific role in the development of web applications. Here's an overview of each technology in the MERN stack:
 
-## MongoDB: MongoDB is a NoSQL database that stores data in a flexible, JSON-like format called BSON (Binary JSON). It is designed to handle large amounts of data and is well-suited for applications with dynamic and evolving schemas.
+**MongoDB**: MongoDB is a NoSQL database that stores data in a flexible, JSON-like format called BSON (Binary JSON). It is designed to handle large amounts of data and is well-suited for applications with dynamic and evolving schemas.
 
-## Express.js: Backend Framework Express.js is a web application framework for Node.js. It simplifies the process of building robust and scalable web applications by providing a set of features for handling routes, middleware, and HTTP requests.
+**Express.js**: Backend Framework Express.js is a web application framework for Node.js. It simplifies the process of building robust and scalable web applications by providing a set of features for handling routes, middleware, and HTTP requests.
 
-## React.js: Frontend Library React.js is a JavaScript library for building user interfaces. 
+**React.js**: Frontend Library React.js is a JavaScript library for building user interfaces. 
 
-## Node.js: Runtime Environment Node.js is a server-side JavaScript runtime that allows developers to run JavaScript on the server.
+**Node.js**: Runtime Environment Node.js is a server-side JavaScript runtime that allows developers to run JavaScript on the server.
 
 When combined, the MERN stack allows developers to build end-to-end web applications using JavaScript for both the frontend and the backend. Here's a typical flow of how these technologies work together:
 
@@ -600,6 +600,5 @@ Lastly go into the root directory `Todo` and run `npm run dev`. This builds the 
 ![24 npm_dev](https://github.com/lucm9/MERN-TODO-APP/assets/96879757/7d841620-ac2c-486f-8c32-57331bf6eab9)
 
 ![25 Todo_Application](https://github.com/lucm9/MERN-TODO-APP/assets/96879757/cfdf7e4e-9219-4ca0-b8da-24afe737b9cf)
-
 
 
