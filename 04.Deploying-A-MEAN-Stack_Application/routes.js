@@ -33,7 +33,7 @@ module.exports = function(app) {
 
   app.delete('/book/:isbn', async function(req, res) {
     try {
-      const result = await Book.findOneAndRemove(req.query);
+      const result = await Book.findOneAndDelete(req.query);
       res.json({
         message: 'Successfully deleted the book',
         book: result
