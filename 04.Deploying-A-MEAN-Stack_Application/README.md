@@ -46,40 +46,63 @@ Check the following status on `MongoDB`
 ![5 Mongodb_Status](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/52446b78-9aa2-439a-8d8d-160ea1f90d65)
 
 Install nodejs and npm which is the default package manager for JavaScript's runtime Node.js.
-``
+
+```
 sudo apt install nodejs
 
 sudo apt install npm
-``
+```
 Install body-parser
 `sudo apt install body-parser`
+
 ![6 Body-Parser](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/cce93cc0-48a8-4205-b397-9166500390bb)
 
 We create a `Books` directory and we initialize it as a npm project using `npm init`. Then create a `server.js` file and setup the server.
+
 ![7 npm_init](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/042d4c9e-780b-49a9-b420-7a9d088ae73f)
 
 Installing express and mongoose which is a package which provides a straight-forward, schema-based solution to model your application data. We will use Mongoose to establish a schema for the database to store data of our book register.
 
 ![8 Install_Moongose](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2a6ef4c2-35fa-41f8-8214-b9d81ab949fb)
 
+## All The Codes Are Located In The Repo
 In the books directory create a directory `apps` and create a `routes.js` file then append the code to it
-![created_routes](./img/10.created_routes.png)
 
 Create a direcotry `models` in the boos directory and add a file `books.js` and append the code which contains the schema model
-![creaated_models](./img/11.created_models_schema.png)
 
 In the book directory create a `public` directory and create a `script.js` file which will contain our angular frontend code 
-![controller_configuration](./img/12.controller_config.png)
 
 Create a `index.html` in the `public` directory and append the code
-![index.html_file](./img/13.htmlfile_creation.png)
+![10 Directory_Setup](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/32063d2b-a585-4e89-8b0a-f9042adbd9b5)
+
+## Configure security group 
+
+Inbound rules to allow our application to be accessible via the internet via our server port
+
+![9 Security_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6e2bc782-aca8-4e31-8883-4154c5fe5e42)
 
 We move into the books directory and spin up the express server using `node server.js`
+![11 Node_Server_Js](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/7c892f17-0ba5-4d0d-8d9c-1fb8bb2fbbfd)
 
-![spinning_server](./img/14.server_spinned.png)
+## Errors
 
-Configure security group inbound rules to allow our application to be accessible via the internet via our server port
-![inbound_rules](./img/15.security_group_inbound.png)
+The error message indicates that the version of `npm` you're trying to install (latest) is not compatible with your current version of `Node.js (v12.22.9)`. The required Node.js version for the installed npm version is ^18.17.0 || >=20.5.0.
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+source ~/.bashrc
+
+nvm install 18.17.0
+
+nvm use 18.17.0
+
+npm update
+```
+![12 Npm_update](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/cd93cda2-c875-4c43-b2ac-4fa52a7fd043)
 
 On a browser, paste the public ip address of our instance to view the site
-![success](./img/16.success.png)
+
+![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ed65bd43-c03a-480f-828a-d3ef14181612)
+
+
