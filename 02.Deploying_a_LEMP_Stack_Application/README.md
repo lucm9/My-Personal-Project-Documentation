@@ -58,7 +58,7 @@ Verify through the internet, open the web browser and try to access with the the
 
 This page confirms the firewalls were configured correctly
 
-Another way to retrieve your pubic IP address run `curl ifconfig.me'
+Another way to retrieve your pubic IP address run `curl ifconfig.me`
 ![7 Pulling_Public-IP](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/701edd60-ae0d-4e3e-8b5d-9eeebea2a5fe)
 
 ## Installing MySQL
