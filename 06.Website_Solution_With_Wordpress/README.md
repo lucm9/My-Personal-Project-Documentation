@@ -44,4 +44,26 @@ Next step is to mark the newly created partitions as physical volumes using `sud
 
 ![8 Sudo_Pvs](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/5d2ca173-3569-48d6-a754-88cab532b526)
 
-- Next step is to group all the physical volumes into a volume group. 
+- Next step is to group all the physical volumes into a volume group using `sudo vgcreate <group_name> <pv_path1> <pv_path2>`. 
+- `sudo vgs` to view the newly created volume group
+
+![9 Create_Volume_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/379341e3-8734-454b-a0f9-04ff1117eadf)
+
+- Create logical volume for the volume group `sudo lvcreate -n <lv_name> -L <lv_size> <vg_name>`. Example `sudo lvcreate -n <apps-lv> -L <14G> <webdata-vg>`
+- `sudo lvs` to view logical volume.
+
+![10 View_logical_Volume](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2f032e11-6a6c-42f0-9ea1-d873d574b26d)
+
+- Our logical volumes are ready to be used as filesystems for storing application and log data.
+- Create filesystems for the logical volumes created. 
+
+![11 Filesystem](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/4543d03b-92ba-446c-a715-e331c0c78ff1)
+
+- The apache webserver uses the `HTML` folder in the `var` directory to store its web content. We create this directory and also a directory for collecting log data of our application.
+
+![14 Apache_Content_Library](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2208e63b-a278-4e78-a971-d9cb3453d6c5)
+
+
+
+
+
