@@ -36,11 +36,12 @@ To see all the mounts and free space on the server run `df -h`
   
 ![6 To_verify_Installation](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/806da2b9-1501-4510-9269-a4337bd47df5)
 
-Next step is to mark the newly created partitions as partitions using `pvcreate` 
+Next step is to mark the newly created partitions as physical volumes using `sudo pvcreate /dev/<partition>` 
 
 ![7 Pv_create](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/37b07626-6298-483f-a16c-bbc2afdc902d)
 
+- `sudo pvs` to view
 
+![8 Sudo_Pvs](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/5d2ca173-3569-48d6-a754-88cab532b526)
 
-
-
+- Next step is to group all the physical volumes into a volume group. 
