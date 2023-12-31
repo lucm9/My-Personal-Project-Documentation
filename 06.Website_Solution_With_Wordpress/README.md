@@ -92,3 +92,70 @@ sudo mount /dev/webdata-vg/apps-lv  /var/www/html/
 
 - Repeated all the steps taken to configure the web server on the DB server. Changed the `apps-lv` logical volume to `db-lv`
 
+## Configuring Web Server
+- Run updates and install httpd on web server
+```
+yum install -y update
+sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
+```
+Start web server and check the status
+
+```
+sudo systemcyl start httpd
+sudo systemctl status httpd
+```
+- Installing php and its dependencies
+
+```
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
+sudo yum install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
+sudo yum module reset php -y
+sudo yum module enable php:remi-8.0 -y
+sudo yum install php php-opcache php-gd php-curl php-mysqlnd -y
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+sudo setsebool -P httpd_execmem 1
+```
+- Restart the web server: `sudo systemctl reload httpd`
+
+## Downloading wordpress and moving it into the web content directory
+
+```
+mkdir wordpress
+cd   wordpress
+sudo wget http://wordpress.org/latest.tar.gz
+sudo tar xzvf latest.tar.gz
+sudo rm -rf latest.tar.gz
+cp wordpress/wp-config-sample.php wordpress/wp-config.php
+cp -R wordpress /var/www/html/
+```
+- Configure SELinux Policies
+  
+```  
+sudo chown -R apache:apache /var/www/html/wordpress
+sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
+sudo setsebool -P httpd_can_network_connect=1
+```
+## Installing MySQL on DB Server
+```
+sudo yum update
+sudo yum install mysql-server
+```
+
+- To ensure that database server starts automatically on reboot or system startup
+```
+sudo systemctl restart mysqld
+sudo systemctl enable mysqld
+```
+
+- Configure Database to work with wordpress
+
+```
+sudo mysql
+CREATE DATABASE wordpress;
+CREATE USER `myuser`@`<Web-Server-Private-IP-Address>` IDENTIFIED BY 'mypass';
+GRANT ALL ON wordpress.* TO 'myuser'@'<Web-Server-Private-IP-Address>';
+FLUSH PRIVILEGES;
+SHOW DATABASES;
+exit
+```
