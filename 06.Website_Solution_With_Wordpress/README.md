@@ -63,7 +63,23 @@ Next step is to mark the newly created partitions as physical volumes using `sud
 
 ![14 Apache_Content_Library](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2208e63b-a278-4e78-a971-d9cb3453d6c5)
 
+- For our filesystem to be used by the user we mount it on the apache directory. We mount the log filesystem to the log directory
+```
+sudo mount /dev/webdata-vg/apps-lv  /var/www/html/
+```
+- backup the log directory /var/log/. to the /home/recovery/logs before mounting. Mouting a directory that's not empty will remove everything within that directory.
+- Run `sudo rsync -av /var/log/. /home/recovery/logs
+  ```
+  sudo mount /dev/webdata-vg/logs-lv  /var/log/
+  ```
+  - Restote run `sudo rsync -av /home/recovery/logs /var/log/
+ 
+ ## Persisting Mount Points
 
+ - To ensure that all of our mounts points are not erased after server restart we need to persist the mount point by configurating the `/etc/fstab` directory
+ - `sudo blkid` 
+ 
+    
 
 
 
