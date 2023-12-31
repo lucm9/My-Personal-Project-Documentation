@@ -77,9 +77,18 @@ sudo mount /dev/webdata-vg/apps-lv  /var/www/html/
  ## Persisting Mount Points
 
  - To ensure that all of our mounts points are not erased after server restart we need to persist the mount point by configurating the `/etc/fstab` directory
- - `sudo blkid` 
- 
-    
+ - `sudo blkid`
 
+![15 Blkid](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/569b54e1-78c5-4f45-80ea-01c8320f7b06)
 
+`sudo vi /etc/fstab/`
+
+![16 Persisting_Mount_Point](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2a12e3e8-5cd2-4976-b48e-16151c5de022)
+
+- Test the mount point by running `sudo mount -a' - if no error then we did everything correctly
+- Restart the daemon `sudo systemctl deamoin-reload`
+
+## Prepare The Database Server (MYSQL)
+
+- Repeated all the steps taken to configure the web server on the DB server. Changed the `apps-lv` logical volume to `db-lv`
 
