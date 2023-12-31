@@ -100,6 +100,8 @@ sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
 ```
 Start web server and check the status
 
+![17 Start_Web_Server](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/75158225-56b7-43d0-8909-0e76f4549253)
+
 ```
 sudo systemcyl start httpd
 sudo systemctl status httpd
@@ -147,6 +149,7 @@ sudo yum install mysql-server
 sudo systemctl restart mysqld
 sudo systemctl enable mysqld
 ```
+![18 Starting_DB_Server](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/04ea6a8a-6e97-451d-ac02-795fb80cd4ec)
 
 - Configure Database to work with wordpress
 
@@ -158,4 +161,13 @@ GRANT ALL ON wordpress.* TO 'myuser'@'<Web-Server-Private-IP-Address>';
 FLUSH PRIVILEGES;
 SHOW DATABASES;
 exit
+```
+- Ensure that we add port 3306 on our db server to allow our web server to access the database server.
+![19 Security_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/a33ed3bc-479e-4d12-ac93-7581c173a4e2)
+
+## Connecting Web Server to DB Server
+Installing mySQl client on the web server so we can connect to the db server
+```
+sudo yum install mysql
+sudo mysql -u admin -p -h <DB-Server-Private-IP-address>
 ```
