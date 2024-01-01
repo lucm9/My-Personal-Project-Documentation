@@ -98,6 +98,7 @@ sudo mount /dev/webdata-vg/apps-lv  /var/www/html/
 yum install -y update
 sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
 ```
+- For apache to restart automatically up on server reboot : `sudo systemctl enable httpd`
 Start web server and check the status
 
 ![17 Start_Web_Server](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/75158225-56b7-43d0-8909-0e76f4549253)
