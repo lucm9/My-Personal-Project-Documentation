@@ -6,7 +6,7 @@ In this project I will be introducing the concept of file sharing for multiple s
 
 ## Architectural Design
 
-![16 Web_Architecture](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d5c38a29-1afa-4494-997d-2dc15e415359)
+![16 Web_Architecture](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/927a84c5-0dda-423d-b25e-3804ecabf10d)
 
 On the diagram above we can see a common pattern where several stateless Web Servers share a common database and also access the same files using **Network File Sytem (NFS)** as a shared file storage. Even though the NFS server might be located on a completely separate hardware – for Web Servers it looks like a local file system from where they can serve the same files.
 
@@ -26,6 +26,11 @@ On this server we attach 3 EBS volumes 10GB each as external storage to our inst
 - Webserver content will be stores in /apps, webserver logs in /logs and /opt will be used by Jenkins
   
 ![2 Partition](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/6a9b8298-46c1-43ac-a7aa-a4b0c97af7b9)
+
+We to make sure our mounts remain intact when the server reboots. This is achieved by configuring the fstab directory.
+`sudo vi /etc/fstab`
+
+![12 persist_NFS_Mount](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/1ebf6c26-bc8c-454f-bd80-df4c0cf1766b)
 
 Installing nfs-server on the nfs instance and ensures that it starts on system reboot
 ```
@@ -71,7 +76,69 @@ To check what port is used by NFS so we can open it in security group
 The following ports are to be open on the NFS server
 ![14 Security_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d26a619e-42ee-43a0-88de-bd2f2e1a8997)
 
+## Preparing Database Server
+Create an Ubuntu Server on AWS which will serve as our Database. 
 
+Install mysql-server
+```
+sudo apt -y update
+sudo apt install -y mysql-server
+```
+To enter the db environment run
+`sudo mysql`
 
+- Create a database and name it tooling
+- Create a database user and name it webaccess
+- Grant permission to webaccess user on tooling database to do anything only from the webservers `subnet cidr`
 
+![18 Create_Database](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/36dd9747-538f-498e-9473-e9d9e205d01a)
+
+## Preapare web servers
+
+Create a RHEL EC2 instance on AWS which serves as our web server. Also remember to have in it in same subnet
+
+A couple of configurations will be done on the web servers:
+
+- Configuring NFS client
+- Deploying tooling website application
+- Configure servers to work with database
+  
+**Installing NFS-Client**
+
+```
+sudo yum install nfs-utils nfs4-acl-tools -y
+```
+We will be connecting our `/var/www` directory to our webserver with the `/mnt/apps` on nfs server, and `/var/log/httpd` directory `/mnt/logs` This is acheived by mounting the NFS server directory to the webserver directory Mount /var/www/ and target the NFS server’s export for apps and logs. 
+
+![4 Multi_exec](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2093fd1c-54f4-4856-a02c-0784a576b238)
+
+![19 Mount to NFS](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/c70e6aa7-9729-4e38-8138-1f7b0706ff3a)
+
+After mount we need to persist our mount point in case of reboot under the `/etc/ directory vi into `/fstab` file -`sudo vi /etc/fstab`
+
+add the following line `<NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0`
+
+![7 Persis_mount_point](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/277668ef-240a-4016-87bd-b2634f557ad4)
+
+## Installing Apache and Php
+
+```
+sudo yum install httpd -y
+
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
+
+sudo yum install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
+
+sudo yum module reset php -y
+
+sudo yum module enable php:remi-8.0 -y
+
+sudo yum install php php-opcache php-gd php-curl php-mysqlnd -y
+
+sudo systemctl start php-fpm
+
+sudo systemctl enable php-fpm
+
+sudo setsebool -P httpd_execmem 1
+```
 
