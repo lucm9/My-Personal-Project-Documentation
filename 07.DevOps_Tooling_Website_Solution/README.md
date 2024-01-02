@@ -162,6 +162,6 @@ Run the below comand to import into the mysql database.
 
 ![5 Import_into_mysql](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/f352bf47-73c9-439b-b03c-8f050f775175)
 
-Run <public_ip_address>/index.php on a web browser to access the site. Use public_ip_address of the web server. TCP port 80 should be open on the web broswer.
+Run `<public_ip_address>/index.php` on a web browser to access the site. Use public_ip_address of the web server. **TCP port 80** should be open on the web broswer.
 
 ![9 website](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/f0f15d45-6a7c-4a20-9b7b-56b6a09ee121)
