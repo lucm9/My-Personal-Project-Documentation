@@ -142,3 +142,26 @@ sudo systemctl enable php-fpm
 sudo setsebool -P httpd_execmem 1
 ```
 
+Check permissions to the `/var/www/html` folder and also disable SELinux `sudo setenforce 0` To make this change permanent – open following config file `sudo vi /etc/sysconfig/selinux` and set `SELINUX=disabled` then restrt httpd.
+
+## Run Tooling Script 
+
+Install git - `sudo yum install git` 
+`git clone from git repository`
+`cp -R html/. /var/www/html/`
+
+Once the file is in the `/var/www/html` directory which has been `/mnt/app` wit will be distributed on the rest of the servers. 
+
+In the /var/www/html directory , edit the already written php script to connect to the database sudo vi /var/www/html/functions.php
+![8 Config_php](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/27947c19-0db2-4cfb-9ae1-9c89dddd8aa5)
+
+Run the below comand to import into the mysql database. 
+
+![6 Run_Script](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/fcb86b4f-3ec6-45f2-a746-be9ecfb8d0dd)
+
+
+![5 Import_into_mysql](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/f352bf47-73c9-439b-b03c-8f050f775175)
+
+Run <public_ip_address>/index.php on a web browser to access the site. Use public_ip_address of the web server. TCP port 80 should be open on the web broswer.
+
+![9 website](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/f0f15d45-6a7c-4a20-9b7b-56b6a09ee121)
