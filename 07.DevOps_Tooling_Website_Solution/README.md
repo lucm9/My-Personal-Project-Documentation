@@ -35,8 +35,43 @@ sudo systemctl start nfs-server.service
 sudo systemctl enable nfs-server.service
 sudo systemctl status nfs-server.service
 ```
-
 ![1 NFS_Install](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/37af0e46-4285-45fb-a8f0-a2dd2267ad74)
+
+Set the mount point directory to allow read and write permissions to our webserver
+```
+sudo chown -R nobody: /mnt/apps
+sudo chown -R nobody: /mnt/logs
+sudo chown -R nobody: /mnt/opt
+
+sudo chmod -R 777 /mnt/apps
+sudo chmod -R 777 /mnt/logs
+sudo chmod -R 777 /mnt/opt
+
+sudo systemctl restart nfs-server.service
+```
+![11 Ownership_Modification](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/3608d419-1a70-43f4-a220-d88f70f9975e)
+
+**Note: In this project, we will be creating our NFS-server, web-servers and database-server all in the same subnet**
+
+Next we configure NFS to interact with clients present in the same subnet.
+
+We can find the subnet ID and CIDR in the Networking tab of our instances
+
+![17 subnet](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/221de3d6-fc96-4700-bfd4-c2dd2ce3b13c)
+
+```
+sudo vi /etc/exports
+On the vim editor add the lines as seen in the image below
+sudo exportfs -arv
+```
+![13 NFS_Link_to_other_webserver](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2fea85c3-1073-4e94-aeed-a4e351663cda)
+
+To check what port is used by NFS so we can open it in security group
+
+The following ports are to be open on the NFS server
+![14 Security_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d26a619e-42ee-43a0-88de-bd2f2e1a8997)
+
+
 
 
 
