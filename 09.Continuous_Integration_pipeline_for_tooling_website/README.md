@@ -71,6 +71,8 @@ The console output shows the created job and the successful build. In this case 
 
 Our created artifact can be found on our local terminal too at this path /var/lib/jenkins/jobs/tooling_github/builds/<build_number>/archive/
 
+![image](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/da5bc0ed-69a9-43a1-99a9-d3d45465d577)
+
 ## Configuring Jenkins To Copy Files(Artifact) to NFS Server
 To achieve this, we install the Publish Via SSH pluging on Jenkins. The plugin allows one to send newly created packages to a remote server and install them, start and stop services that the build may depend on and many other use cases.
 
@@ -101,4 +103,3 @@ We specify ** on the send build artifacts tab meaning it sends all artifact to s
 
 Now make a new change on the source code and push to github, Jenkins builds an artifact by downloading the code into its workspace based on the latest commit and via SSH it publishes the artifact into the NFS Server to update the source code.
 
-This is seen by the change of name on the web application 
