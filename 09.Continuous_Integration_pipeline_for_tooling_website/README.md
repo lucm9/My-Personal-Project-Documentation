@@ -4,6 +4,8 @@ Jenkins is an open-source Continuous Integration server written in Java for orch
 
 ## Jenkins Web Architecture For CI Builds
 
+![7 Jenkins_architecture_diagram](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/438c9ef3-0318-4b2c-9780-b1dba4adfaac)
+
 ## Installing Jenkins Server
 Spun up a web server on AWS cloud and SSH into it.
 
@@ -24,22 +26,30 @@ sudo systemctl enable jenkins
 sudo systemctl start jenkins
 sudo systemctl status jenkins
 ```
+![1 Jenkins_Status](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/86d27f9f-a96e-4c47-b090-09896f9ebb6b)
 
 ## Security group
 
 Since Jenkins runs on default port 8080, open this port on the Security Group inbound rule of the jenkins server on AWS
+![10 Jenkins_SG](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/8f442057-9912-4447-aae5-c6132baed374)
 
 Jenkins is up and running, copy and paste jenkins server public ip address appended with port 8080 on a web server to gain access to the interactive console. <jenkins_server_public_ip_address>:8080
 
 The admin password can be found in the '/var/lib/jenkins/secrets/initialAdminPassword' path on the server.
+![2 Jenkins_Websie](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/5373a504-d058-4c4a-b503-5c7eb2ed29f9)
+
+![3 Jenkins_Setup](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/bd9f6099-9884-4fca-ada4-52f3673a2a30)
 
 ## Attaching WebHook to Jenkins Server
-On the github repository that contains application code, create a webhook to connect to the jenkins job. To create webhook, go to the settings tab on the github repo and click on webhooks. Webhook should look like this <public_ip_of_jenkins_server>:8080/github-webhook/
+On the github repository that contains application code, create a webhook to connect to the jenkins job. To create webhook, go to the settings tab on the github repo and click on webhooks. Webhook should look like this `<public_ip_of_jenkins_server>:8080/github-webhook/`
+![4 b Webhook_Setup](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b9c15103-6586-4ae9-9df5-adb0ff088198)
 
 ## Creating Job and Configuring GIT Based Push Trigger
 On the jenkins server, create a new freestyle job
 
 In configuration of the Jenkins freestyle job choose Git repository, provide there the link to the GitHub repository and credentials (user/password) so Jenkins could access files in the repository. Also specify the branch containing code
+
+![5 add_git_repo](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/367d084e-f785-4fb3-9c59-b0e73c6e5a8a)
 
 ## Configuring Build Triggers
 Specify the particular trigger to use for triggering the job. Click "Configure" on the jenkins job and add these two configurations.
