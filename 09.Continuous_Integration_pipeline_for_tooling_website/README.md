@@ -1,4 +1,4 @@
-![15 Plugins_Setup](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/13c80b55-5fd8-4a83-addf-1f2090aeaaf6)# Introduction
+# Introduction
 
 Jenkins is an open-source Continuous Integration server written in Java for orchestrating a chain of actions to achieve the Continuous Integration process in an automated fashion. Jenkins supports the complete development life cycle of software from building, testing, documenting the software, deploying, and other stages of the software development life cycle.
 
