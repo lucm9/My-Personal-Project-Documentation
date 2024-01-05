@@ -1,4 +1,4 @@
-`## LOAD BALANCER SOLUTION WITH NGINX AND SSL/TLS
+## LOAD BALANCER SOLUTION WITH NGINX AND SSL/TLS
 
 Configure Nginx As A Load Balancer
 Create an Nginx WebServer which will be configured as loadbalancer 
