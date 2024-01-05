@@ -56,12 +56,13 @@ Choose Associate.
 
 Update A record in your registrar to point to Nginx LB using Elastic IP address
 
+![7 Update_A_Record](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ff3f95f1-4400-473e-8bb2-4c260c2cead3)
+
 Configure Nginx to recognize the new domain name. This was done by Updating the /etc/nginx/nginx.conf file with
 
 `server_name www.<your-domain-name.com>
 instead of server_name www.domain.com`
 ![2 Script_Update](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/5472db4e-c1e6-4ced-ae69-40a962e51ae5)
-
 
 
 ## Install certbot and request for an SSL/TLS certificate for the domain name. N.B: Make sure snapd is running on the server.
@@ -77,6 +78,7 @@ instead of server_name www.domain.com`
 ## Encrypt renews every 90 days and you can renew your certificate manually by running the following command.
 `sudo certbot renew --dry-run`
 We can also create a cron job to do this same thing at a stipulated time.
+![8 Dry_Run](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/b3ed69cc-7e19-4316-8f64-7e99a47a0e56)
 
 Edit cron file
 `crontab -e`
