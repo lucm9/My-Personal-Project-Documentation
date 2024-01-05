@@ -31,13 +31,13 @@ server {
 #comment out this line
 #       include /etc/nginx/sites-enabled/*;
 ```
-```
 Restart Nginx and verify server status.
+```
 sudo systemctl restart nginx
 sudo systemctl status nginx
 ```
 ## REGISTER A NEW DOMAIN NAME AND CONFIGURE SECURED CONNECTION USING SSL/TLS CERTIFICATES
-Register a new domain name with any registrar EX `godaddy`
+Register a new domain name with any registrar EX `GODADDY`
 
 ## Assign an Elastic IP to Nginx LB server and associated domain name with the Elastic IP.
 
