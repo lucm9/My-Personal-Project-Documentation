@@ -58,7 +58,7 @@ sudo systemctl restart nfs-server.service
 
 **Note: In this project, we will be creating our NFS-server, web-servers and database-server all in the same subnet**
 
-Next we configure NFS to interact with clients present in the same subnet.
+Next we configure NFS to interact with clients present in the same subnet
 
 We can find the subnet ID and CIDR in the Networking tab of our instances
 
@@ -66,12 +66,16 @@ We can find the subnet ID and CIDR in the Networking tab of our instances
 
 ```
 sudo vi /etc/exports
-On the vim editor add the lines as seen in the image below
+/mnt/apps <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+/mnt/logs <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
+/mnt/opt <Subnet-CIDR>(rw,sync,no_all_squash,no_root_squash)
 sudo exportfs -arv
 ```
+On the vim editor add the lines as seen in the image below
+
 ![13 NFS_Link_to_other_webserver](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/2fea85c3-1073-4e94-aeed-a4e351663cda)
 
-To check what port is used by NFS so we can open it in security group
+In order for NFS server to be accessible from your client, we must also open following ports: TCP 111, UDP 111, UDP 2049 in the security group
 
 The following ports are to be open on the NFS server
 ![14 Security_Group](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/d26a619e-42ee-43a0-88de-bd2f2e1a8997)
