@@ -151,7 +151,7 @@ Check permissions to the `/var/www/html` folder and also disable SELinux `sudo s
 ## Run Tooling Script 
 
 Install git - `sudo yum install git` 
-`git clone from git repository`
+`git clone from git repository` https://github.com/darey-io/tooling.git
 `cp -R html/. /var/www/html/`
 
 Once the file is in the `/var/www/html` directory which has been `/mnt/app` wit will be distributed on the rest of the servers. 
