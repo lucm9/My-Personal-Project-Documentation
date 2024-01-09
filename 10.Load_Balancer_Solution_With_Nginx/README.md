@@ -9,7 +9,7 @@ Update /etc/hosts file for local DNS with Web Servers names (e.g. Web1 and Web2)
 
 ![4 etc_hosts](https://github.com/lucm9/My-Personal-Project-Documentation/assets/96879757/ccf1c353-3cd1-44ca-95f6-27a67df82e2a)
 
-Configure Nginx as a load balancer to point traffic to the resolvable DNS names of the webservers
+Configure Nginx as a load balancer to point traffic to the resolvable DNS names of the webservers 'sudo apt install nginx' 
 
 `sudo vi /etc/nginx/nginx.conf`
 ```
