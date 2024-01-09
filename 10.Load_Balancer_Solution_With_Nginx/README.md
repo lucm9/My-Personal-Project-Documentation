@@ -68,9 +68,11 @@ instead of server_name www.domain.com`
 ## Install certbot and request for an SSL/TLS certificate for the domain name. N.B: `Make sure snapd is running on the server.
 ```
    sudo systemctl status snapd
+   sudo snap install --classic certbot
    sudo apt install certbot -y
    sudo apt install python3-certbot-nginx -y
-   sudo nginx -t && sudo nginx -s reload
+   sudo nginx -t
+   sudo nginx -s reload
    sudo vi /etc/nginx/nginx.conf - verify the server names 
    sudo certbot --nginx -d lucdevops.online -d www.lucdevops.online
 ```
