@@ -1,5 +1,5 @@
-## CI/CD PIPELINE FOR PHP BASED APPLICATION
-![](CI_CD_Pipeline-1.png)
+# CI/CD PIPELINE FOR PHP BASED APPLICATION
+![Pipeline_Diagram](CI_CD_Pipeline.png)
 
 ## Project Description
 
@@ -59,7 +59,7 @@ ssh-add private-pem-key-file
 On Gitbash use `code .` When you run  `code .` it tells Visual Studio Code to open the current directory as a project.
 
 
-# Install the following packages and dependencies on the Jenkins Server
+## Install the following packages and dependencies on the Jenkins Server
 
 - Install git : `sudo yum install git -y`
 
@@ -73,8 +73,145 @@ On Gitbash use `code .` When you run  `code .` it tells Visual Studio Code to op
 
 - Log onto jenkins Server using the `public-ip:8080`
 
+Once we have logged on the Jenkins Server, click on manage jenkins -> Manager plugins -> Available plugins, search for `Blue Bcean`
+
+![Blue_Ocean](Blue_Ocean.png)
+
+- Click on personal tocken authentication in order to generate your own. 
+
+![Deploy_Jekins_file](Jenkins_file_path.png)
+
+- Input Jenkins file path to help jenkins locate the file.
+
+![Pipe_line_test](pipeline_test_run.png)
+
+## Running Ansible Playbook From Jenkins
+
+Install Ansible plugin from jenkins same way we installed Blue Ocean 
+
+Install ansible on the Jenkins Server as well. Follow this link for more on installing Ansible based on your OS. -> https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html
+
+Add the following script to the Jenkinsfile 
+
+with this file we are deploying to the dev environment
+
+```
+pipeline {
+  agent any
+
+  environment {
+      ANSIBLE_CONFIG="${WORKSPACE}/deploy/ansible.cfg"
+    }
+
+  parameters {
+      string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
+    }
+
+  stages{
+      stage("Initial cleanup") {
+          steps {
+            dir("${WORKSPACE}") {
+              deleteDir()
+            }
+          }
+        }
+
+      stage('Checkout SCM') {
+         steps{
+            git branch: 'main', url: 'https://github.com/lucm9/Ansible-Config.git'
+         }
+       }
+
+      stage('Prepare Ansible For Execution') {
+        steps {
+          sh 'echo ${WORKSPACE}' 
+          sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/deploy/ansible.cfg'  
+        }
+     }
+
+      stage('Run Ansible playbook') {
+        steps {
+           ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/${inventory}', playbook: 'playbooks/site.yml', vaultTmpPath: ''
+         }
+      }
+
+      stage('Clean Workspace after build'){
+        steps{
+          cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
+        }
+      }
+   }
+
+}
+```
 
 
+- Ensure Jenkins is using the `main` branch `master` branch is not longer active due to BLM
+
+- Jenkins needs to export the ANSIBLE_CONFIG environment variable. create a new file as ansible.cfg in the deploy folder add the below script
+
+```
+[defaults]
+timeout = 160
+callback_whitelist = profile_tasks
+log_path=~/ansible.log
+host_key_checking = False
+gathering = smart
+ansible_python_interpreter=/usr/bin/python3
+allow_world_readable_tmpfiles=true
 
 
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=30m -o ControlPath=/tmp/ansible-ssh-%h-%p-%r -o ServerAliveInterval=60 -o ServerAliveCountMax=60 -o ForwardAgent=yes
+```
+
+In our Jenkinsfile above there's a parameterization. It will look like this 
+
+```
+
+parameters {
+    string(name: 'inventory', defaultValue: 'dev',  
+    description: 'This is the inventory file for the
+    environment to deploy configuration')
+    }
+```
+
+In the Jenkinsfile remove the hardcoded inventory/dev and replace with ${inventory}
+
+```
+stage('Run Ansible playbook') {
+    steps {
+           ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory/${inventory}', playbook: 'playbooks/site.yml', vaultTmpPath: ''
+         }
+      }
+```
+
+## CI/CD PIPELINE FOR TODO APP 
+
+The goal here is to deploy our todo app onto servers directly from the `Artifactory` rather than from git.
+
+- Update Ansible-Config repo with Artifatory role. Install artifactory role from Ansible-galaxy repository.
+
+- Once its installed open the browser and type the URL http://public-ip:8082
+
+On the jenkins-server git clone the php-app repository. 
+
+## Install PHP and other packages
+
+```
+sudo yum module reset php -y
+sudo dnf module install php:remi-8.3 -y
+sudo yum module enable php:remi-8.3 -y
+sudo yum install php php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath -y
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+```
+![php-status](php-fpm-status.png)
+
+On the Jenkins-Server Install Plot plugin and Artifactory Plugin.
+
+![Plot and artifact](Plot-and-Artifac-Install.png)
+
+
+Run the jenkinsfile to triggr ansible playbook to install and setup the artifactory server.
 
