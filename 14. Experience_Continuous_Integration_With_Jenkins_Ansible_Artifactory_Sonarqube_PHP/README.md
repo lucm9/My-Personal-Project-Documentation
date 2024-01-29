@@ -91,6 +91,8 @@ Install Ansible plugin from jenkins same way we installed Blue Ocean
 
 Install ansible on the Jenkins Server as well. Follow this link for more on installing Ansible based on your OS. -> https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html
 
+Under Jenkins Management -> add `usr/bin` for ansible
+
 Add the following script to the Jenkinsfile 
 
 with this file we are deploying to the dev environment
@@ -214,4 +216,34 @@ On the Jenkins-Server Install Plot plugin and Artifactory Plugin.
 
 
 Run the jenkinsfile to triggr ansible playbook to install and setup the artifactory server.
+
+update the CI inventory with the artifact private-ip
+
+![Artifactory](playbook-for-artifactory.png)
+
+Setup Security Group
+
+![Securty_Group](Security_Group.png)
+
+Create a `Generic` repository called PBL. This repository will be used to store the binary build artifact. 
+
+![](Luc-repo.png)
+
+![](Jfrog-Instance.png)
+
+## Integrate Artifact Repository With Jenkins
+
+ - Create a new Jenkinsfile in the Php-Todo Repository
+ - Using Blue Ocean, Create a new pipeline
+ - Install mysql Client: `sudo yum install mysql -y`
+ - Update mysql bind address to 0.0.0.0
+ - Create database `Homestead` and user 
+ - Run php-todo pipeline
+
+![database_install](database.png)
+
+Verify the database 
+
+![Verification](<show database.png>)
+
 
