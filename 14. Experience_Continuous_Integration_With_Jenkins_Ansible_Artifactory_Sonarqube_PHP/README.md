@@ -246,4 +246,7 @@ Verify the database
 
 ![Verification](<show database.png>)
 
+Visualizing the PHP code analytics using the Jenkins Plot plugin.
+
+
 
