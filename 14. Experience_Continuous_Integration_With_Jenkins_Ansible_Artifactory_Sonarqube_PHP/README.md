@@ -248,5 +248,135 @@ Verify the database
 
 Visualizing the PHP code analytics using the Jenkins Plot plugin.
 
+![Alt text](plot-Visual.png)
 
+![Alt text](plot-data.png) 
+
+
+Bundle the code into an artifact and upload to the artifactory.
+
+- install zip `sudo yum install zip -y`
+```
+stage ('Package Artifact') {
+      steps {
+            sh 'zip -qr php-todo-app.zip ${WORKSPACE}/*'
+     }
+    }
+
+```
+
+Publish the artifact into the artifactory 
+```
+ stage ('Upload Artifact to Artifactory') {
+        steps {
+            script { 
+                 def server = Artifactory.server 'artifactory-server'                 
+                 def uploadSpec = """{
+                    "files": [
+                      {
+                       "pattern": "php-todo-app.zip",
+                       "target": "Luc/php-todo-app",
+                       "props": "type=zip;status=ready"
+
+                       }
+                    ]
+                 }""" 
+
+                 server.upload spec: uploadSpec
+               }
+            }
+
+        }
+```
+![Alt text](upload-to-artifactory.png)
+
+Now we deploy the application to our dev environment using by launching our ansible pipeline. Ensure to update the inventory/dev with the private ip of the Webserver and update the site.yml to only run for the dev server. 
+
+```
+        stage ('Deploy to Dev Environment') {
+          steps {
+            build job: 'Ansible-Config/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+    }
+  }
+
+```
+
+## Install Sonarqube
+
+SonarQube is a tool that can be used to create quality gates for software projects, and the ultimate goal is to be able to ship only quality software code.
+
+Even though we have implemented Unit Tests and Code Coverage Analysis with phpunit and phploc, we still need to implement Quality Gate to ensure that only code with the required code coverage, and other quality standards make it through to the environments.
+
+On our ansible-config repository create a sonarqube role and install sonarqube.
+
+![](sonar-installation.png)
+
+Log onto the server using Public-ip:9000/sonar 
+ - username : admin
+ - password: admin 
+
+## Jenkins-Server With SonarQube
+
+Install Sonarqube plugin on Jenkins 
+
+![Alt text](add-sonar-jenkins.png) 
+  
+
+Generate authentication token in SonarQube
+
+![Alt text](Sonar-token.png)
+
+Configure Quality Gate Jenkins Webhook in SonarQube — The URL should point to your Jenkins server
+ ![Alt text](sonarqube-webhook.png)
+
+
+![Alt text](sonarqube-webhook-2.png)
+
+We use the token to set up the webhook.
+
+Setup SonarQube scanner from Jenkins — Global Tool Configuration
+
+![Alt text](sonar-scanner.png) 
+
+Update Jenkins pipeline to include sonarqube scanning and Quality Gate. 
+
+```
+  stage('SonarQube Quality Gate') {
+      when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
+        environment {
+            scannerHome = tool 'SonarQubeScanner'
+        }
+        steps {
+            withSonarQubeEnv('sonarqube') {
+                sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+            }
+            timeout(time: 1, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+    
+```
+
+The above step will fail because we have no uploaded the sonar.properties. 
+
+- Go into cd /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/conf/.
+- Open Sonar-scanner.properties file: `sudo vi sonar-scanner.properties`
+- Add configuration related to the php-todo project or which ever name you give it. 
+
+## sonar properties
+```
+sonar.host.url=http://3.125.17.131:9000/sonar/ sonar.projectKey=php-todo #----- Default source code encoding sonar.sourceEncoding=UTF-8 sonar.php.exclusions=/vendor/ sonar.php.coverage.reportPaths=build/logs/clover.xml sonar.php.tests.reportPath=build/logs/junit.xml
+```
+![Alt text](sonarqube-display.png)
+
+## JENKINS-SLAVE
+
+We can setup Jenkins-slave and configure Jenkins to run its pipeline jobs randomly on any available slave nodes.
+
+First, we create the Jenkins-slave instances
+
+![Alt text](Jenkins-Slave-server.png)
+ 
+![Alt text](jenkins-slave.png)
 
